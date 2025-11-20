@@ -20,7 +20,7 @@ const CreateBoard = () => {
         const boards = JSON.parse(localStorage.getItem('boards') || '[]')
         boards.push({
             title: form.title,
-            users: form.users.split(',').map((email) => email.trim()).push(JSON.parse(localStorage.getItem('currentUser') || '{}').email)
+            users: form.users.split(',').map((email) => email.trim()).concat(JSON.parse(localStorage.getItem('currentUser') || '{}').email)
         })
         localStorage.setItem('boards', JSON.stringify(boards))
         setForm({
@@ -29,7 +29,7 @@ const CreateBoard = () => {
             id: boards.length - 1,
             likes: 0
         })
-        Navigate(`/boards/${boards.length - 1}`, { state: { form } })
+        Navigate(`/boards/${boards.length - 1}`)
     }
     return (
         <div>
@@ -47,6 +47,8 @@ const CreateBoard = () => {
                     label='Почты Пользователей (через запятую)'
                     value={form.users}
                     onChange={handleChange}
+                    isRequired={false}
+                    type={'text'}
                 />
                 <button type="submit">Создать доску</button>
             </form>

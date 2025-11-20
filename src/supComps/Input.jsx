@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Input = ({ name, label, value, onChange, type, minLength }) => {
     return (
         <label>
@@ -8,7 +10,6 @@ const Input = ({ name, label, value, onChange, type, minLength }) => {
                 value={value}
                 onChange={onChange}
                 lang="en-GB"
-                required
                 minLength={minLength || null}
             />
         </label>

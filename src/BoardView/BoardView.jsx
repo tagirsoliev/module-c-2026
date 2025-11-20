@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import boardStyles from "./Board.module.css"
 
 const Board = () => {
     const { id } = useParams()
@@ -30,29 +29,10 @@ const Board = () => {
     return (
         <div>
             <nav>
-                <h2>{form.title}</h2>
                 <button onClick={createLink}>Создать ссылку на просмотр доски</button>
             </nav>
-            <div >
-                <div className={boardStyles.container}>
-                    <aside>
-                        <div>
-                            <h2>Фигуры</h2>
-                            <div className={boardStyles.shapes}>
-                                <button>Текст</button>
-                                <button>Изображение</button>
-                                <button>Прямоугольник</button>
-                                <button>Круг</button>
-                                <button>Линия</button>
-                            </div>
-                        </div>
-                    </aside>
-                    <div className={boardStyles.board}>
-
-                    </div>
-                </div>
-            </div >
-        </div >
+            <h2>{form.title}</h2>
+        </div>
     )
 }
 export default Board

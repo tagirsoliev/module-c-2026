@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
 import Reg from './Reg/Reg'
 import Login from './Login/Login'
 import BoardsList from './BoardsList/BoardsList'

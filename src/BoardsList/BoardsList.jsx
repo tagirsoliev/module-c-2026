@@ -6,10 +6,8 @@ const BoardsList = () => {
     const [boards, setBoards] = useState([])
     useEffect(() => {
         setBoards(JSON.parse(localStorage.getItem('boards') || '[]'))
-        onlyMyBoards()
         //
         //
-        handleSortChange({ target: { value: sortOrder === 'asc' ? 'by likes asc' : 'by likes desc' } }) //!
         //
         //
     }, [])
@@ -50,6 +48,13 @@ const BoardsList = () => {
     const toCreateBoard = () => {
         Navigate('/create-board')
     }
+    const linkToWatchBoard = (index) => {
+        Navigate(`/boards/${index}/view`)
+    }
+    const linkToChangeBoard = (index) => {
+        Navigate(`/boards/${index}`)
+    }
+
     return (
         <div>
             <h1>Список досок</h1>
@@ -70,9 +75,9 @@ const BoardsList = () => {
             ) : (
                 boards.map((board, index) => (
                     <div key={index}>
-                        <h2>{board.name}</h2>
-                        <button>Смотреть</button>
-                        <button>{board.users.find((email) => email === myUser.email) ? "Редактировать" : "Отправить запрос на редактирование"}</button>
+                        <h2>{board.title}</h2>
+                        <button onClick={() => linkToWatchBoard(index)}>Смотреть</button>
+                        {board.users.find((email) => email === myUser.email) ? <button onClick={() => linkToChangeBoard(index)}>Редактировать</button> : null}
                         {/* Можно хранить как связь доска.пользователи или как пользователь.доски */}
                         <button onClick={likeBoard}>Поставить лайк</button>
                     </div>
