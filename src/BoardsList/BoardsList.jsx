@@ -12,8 +12,22 @@ const BoardsList = () => {
         //
     }, [])
     const [checkbox, setCheckbox] = useState(false)
-    const likeBoard = () => {
-        alert('Лайк поставлен!')
+    const likeBoard = (index) => {
+        const all = JSON.parse(localStorage.getItem('boards') || '[]')
+        const board = all[index]
+        const userEmail = myUser.email
+        if (!board) return
+        board.likedBy = board.likedBy || []
+        const liked = board.likedBy.find(e => e === userEmail)
+        if (liked) {
+            board.likedBy = board.likedBy.filter(e => e !== userEmail)
+        } else {
+            board.likedBy.push(userEmail)
+        }
+        board.likes = board.likedBy.length
+        all[index] = board
+        localStorage.setItem('boards', JSON.stringify(all))
+        setBoards(JSON.parse(localStorage.getItem('boards') || '[]'))
     }
     const [sortOrder, setSortOrder] = useState('asc')
     const myUser = JSON.parse(localStorage.getItem('currentUser') || '{}')
@@ -79,7 +93,8 @@ const BoardsList = () => {
                         <button onClick={() => linkToWatchBoard(index)}>Смотреть</button>
                         {board.users.find((email) => email === myUser.email) ? <button onClick={() => linkToChangeBoard(index)}>Редактировать</button> : null}
                         {/* Можно хранить как связь доска.пользователи или как пользователь.доски */}
-                        <button onClick={likeBoard}>Поставить лайк</button>
+                        <button onClick={() => likeBoard(index)}>{board.likedBy && board.likedBy.find(e => e === myUser.email) ? 'Убрать лайк' : 'Поставить лайк'}</button>
+                        <span style={{ marginLeft: 8 }}>{board.likes || (board.likedBy ? board.likedBy.length : 0)} ❤</span>
                     </div>
                 ))
             )}
